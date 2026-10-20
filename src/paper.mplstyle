@@ -1,0 +1,48 @@
+# Matplotlib style for manuscript-quality figures.
+# Reference: https://matplotlib.org/stable/tutorials/introductory/customizing.html
+
+# Global text and output
+text.usetex: False
+mathtext.fontset: cm
+font.family: serif
+font.size: 8
+savefig.format: pdf
+
+# Lines
+lines.linewidth: 1.5
+lines.markersize: 6
+lines.markeredgewidth: 0.5
+
+# Axes
+axes.linewidth: 0.8
+axes.labelsize: 7
+axes.labelpad: 3.0
+axes.grid: True
+grid.linestyle: --
+grid.linewidth: 0.2
+axes.spines.top: False
+axes.spines.right: False
+
+# Color cycle (Paul Tol palette)
+# Reference: https://cran.r-project.org/web/packages/khroma/vignettes/tol.html
+# axes.prop_cycle: cycler("color", ["#4477AA", "#EE6677", "#228833", "#CCBB44", "#66CCEE", "#AA3377", "#BBBBBB"])
+axes.prop_cycle: cycler("color", ["#4477AA", "#EE6677", "#0B4E16", "#CCBB44", "#66CCEE", "#AA3377", "#BBBBBB"])
+
+# Ticks
+xtick.direction: in
+ytick.direction: in
+xtick.labelsize: 6
+ytick.labelsize: 6
+xtick.major.width: 0.6
+xtick.minor.width: 0.4
+ytick.major.width: 0.6
+ytick.minor.width: 0.4
+
+# Legend
+legend.frameon: True
+legend.framealpha: 0.8
+legend.fancybox: True
+legend.fontsize: 6
+
+# Figure
+figure.dpi: 300

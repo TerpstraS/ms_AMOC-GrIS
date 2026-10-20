@@ -1,0 +1,25 @@
+name: ms_AMOC-GrIS
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - black
+  - flake8
+  - isort
+  - pip
+  - tqdm
+  - numpy
+  - matplotlib
+  - cartopy
+  - xarray
+  - netcdf4
+  - nc-time-axis
+  - jupyterlab
+  - scipy
+  - requests
+  - cmocean
+  - pyproj
+  - pip:
+    - python-dotenv
+    - mkdocs
+    - -e .
