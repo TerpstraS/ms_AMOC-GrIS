@@ -895,6 +895,8 @@ def plot_GIS_contourf_yelmo(
     title="time",
     savefig=False,
     format="png",
+    fname_processed_data=None,
+    load_processed_data=False,
 ):
     """
     Plot a contour plot of a variable var with a given DataArray or DataSet ds at a given time index.
@@ -934,36 +936,48 @@ def plot_GIS_contourf_yelmo(
         Figure and axes
     """
 
-    # Check whether we have a DataArray or a DataSet for the variable var
-    if isinstance(ds, xr.DataArray):
-        da = ds
-    elif isinstance(ds, xr.Dataset):
-        da = ds[var]
-    else:
-        raise ValueError("ds must be an xarray DataArray or DataSet")
+    # Check if preprocessed data file exists
+    if load_processed_data and fname_processed_data is not None and os.path.exists(fname_processed_data):
 
-    # Select time index
-    if time_index is not None and "time" in da.dims:
-        da = da.isel(time=time_index)
-    else:
-        # Check if there is time dimension, if so, take the first time index
-        if "time" in da.dims:
-            da = da.isel(time=0)
+        # Load as DataArray from the processed data file
+        da = xr.open_dataarray(fname_processed_data)
 
-    # print(da)
-    # print(mask)
+    else:
+
+        # Check whether we have a DataArray or a DataSet for the variable var
+        if isinstance(ds, xr.DataArray):
+            da = ds
+        elif isinstance(ds, xr.Dataset):
+            da = ds[var]
+        else:
+            raise ValueError("ds must be an xarray DataArray or DataSet")
+
+        # Select time index
+        if time_index is not None and "time" in da.dims:
+            da = da.isel(time=time_index)
+        else:
+            # Check if there is time dimension, if so, take the first time index
+            if "time" in da.dims:
+                da = da.isel(time=0)
+
+        # print(da)
+        # print(mask)
     
 
-    # Check whether we have a DataArray or a DataSet for the mask
-    if mask is not None:
-        mask = _resolve_mask(mask, da)
-        da = da.where(mask)
+        # Check whether we have a DataArray or a DataSet for the mask
+        if mask is not None:
+            mask = _resolve_mask(mask, da)
+            da = da.where(mask)
 
-    # Remove values directly around zero, because it is negligible/model artifact of slightly 
-    # negative thickness. Applying the mask with xarray preserves the DataArray dimensions and 
-    # coordinates for plotting.
-    da = da.where((da <= -1.0) | (da >= 1.0))
-    da = da / 1000.0  # Convert from m to km
+        # Remove values directly around zero, because it is negligible/model artifact of slightly 
+        # negative thickness. Applying the mask with xarray preserves the DataArray dimensions and 
+        # coordinates for plotting.
+        da = da.where((da <= -1.0) | (da >= 1.0))
+        da = da / 1000.0  # Convert from m to km
+
+        # Save da to data/plotting in case full data is not available (save as dataarray)
+        if fname_processed_data is not None:
+            da.to_netcdf(fname_processed_data)
 
     # Create mask for values outside greenland mainland northwest side, using xc and yc coordinates
     # mask_northwest = (da["xc"] < -350) & (da["yc"] > -1100)
@@ -1066,6 +1080,8 @@ def plot_GIS_smb_contourf_yelmo(
     title="time",
     savefig=False,
     format="png",
+    fname_processed_data=None,
+    load_processed_data=False,
 ):
     """
     Plot a contour plot of a variable var with a given DataArray or DataSet ds at a given time index.
@@ -1105,27 +1121,40 @@ def plot_GIS_smb_contourf_yelmo(
         Figure and axes
     """
 
-    # Check whether we have a DataArray or a DataSet for the variable var
-    if isinstance(ds, xr.DataArray):
-        da = ds
-    elif isinstance(ds, xr.Dataset):
-        da = ds[var]
+    # Check if preprocessed data file exists
+    if load_processed_data and fname_processed_data is not None and os.path.exists(fname_processed_data):
+
+        # Load as DataArray from the processed data file
+        da = xr.open_dataarray(fname_processed_data)
+
     else:
-        raise ValueError("ds must be an xarray DataArray or DataSet")
 
-    # Select time index
-    if time_index is not None and "time" in da.dims:
-        da = da.isel(time=time_index)
-    else:
-        # Check if there is time dimension, if so, take the first time index
-        if "time" in da.dims:
-            da = da.isel(time=0)
+        # Check whether we have a DataArray or a DataSet for the variable var
+        if isinstance(ds, xr.DataArray):
+            da = ds
+        elif isinstance(ds, xr.Dataset):
+            da = ds[var]
+        else:
+            raise ValueError("ds must be an xarray DataArray or DataSet")
 
-    # Check whether we have a DataArray or a DataSet for the mask
-    if mask is not None:
-        mask = _resolve_mask(mask, da)
-        da = da.where(mask)
+        # Select time index
+        if time_index is not None and "time" in da.dims:
+            da = da.isel(time=time_index)
+        else:
+            # Check if there is time dimension, if so, take the first time index
+            if "time" in da.dims:
+                da = da.isel(time=0)
 
+        # Check whether we have a DataArray or a DataSet for the mask
+        if mask is not None:
+            mask = _resolve_mask(mask, da)
+            da = da.where(mask)
+
+        # Save da to data/plotting in case full data is not available (save as dataarray)
+        if fname_processed_data is not None:
+            da.to_netcdf(fname_processed_data)
+
+        
     # Create mask for values outside greenland mainland northwest side, using xc and yc coordinates
     # mask_northwest = (da["xc"] < -350) & (da["yc"] > -1100)
     # da = da.where(~mask_northwest)
