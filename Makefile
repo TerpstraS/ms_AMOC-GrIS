@@ -2,7 +2,7 @@
 # GLOBALS                                                                       #
 #################################################################################
 
-PROJECT_NAME = AMOC-GrIS
+PROJECT_NAME = ms_AMOC-GrIS
 PYTHON_VERSION = 3.12
 PYTHON_INTERPRETER = python
 

@@ -940,7 +940,7 @@ def plot_GIS_contourf_yelmo(
     if load_processed_data and fname_processed_data is not None and os.path.exists(fname_processed_data):
 
         # Load as DataArray from the processed data file
-        da = xr.open_dataarray(fname_processed_data)
+        da = xr.open_dataarray(fname_processed_data, mode='r')
 
     else:
 
@@ -994,8 +994,8 @@ def plot_GIS_contourf_yelmo(
         fig = ax.figure
 
     # Transform coordinates from model grid to lon/lat
-    xc = ds["xc"].values * 1000 # meters
-    yc = ds["yc"].values * 1000 # meters
+    xc = da["xc"].values * 1000 # meters
+    yc = da["yc"].values * 1000 # meters
 
     xc_2d, yc_2d = np.meshgrid(xc, yc)
 

@@ -30,7 +30,7 @@ DIR_CWD = os.getcwd()
 # Directory containing the different models with output
 DIR_MODEL = os.path.join(DIR_BASE, "models", "climber-x-fork", "climber-x-grl")
 
-DIR_OUTPUT = os.path.join(DIR_MODEL, "output")
+DIR_OUTPUT = os.path.join(DIR_MODEL, "output-no-exist")
 DIR_INPUT = os.path.join(DIR_MODEL, "input")
 
 # Data directory (of the project folder)
