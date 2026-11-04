@@ -41,13 +41,6 @@ import nc_time_axis
 from src.config import *
 import src.utils as utils
 
-# plt.rc("font", family="serif", size="medium")
-# plt.rc("savefig", dpi=300, format="pdf")
-# plt.rc("legend", loc="best", fontsize="small", fancybox=True, framealpha=1)
-# plt.rc("lines", linewidth=1.8, markersize=6, markeredgewidth=1)
-# plt.rc("axes.spines", top=False, right=False)
-# mpl.rcParams['text.usetex'] = True
-# mpl.rcParams['text.latex.preamble'] = r'\usepackage{amsmath}'
 
 # Set plot style
 style_path = os.path.join(DIR_SRC, "paper.mplstyle")
@@ -95,24 +88,6 @@ def _copy_cmap(cmap):
     if hasattr(cmap, "copy"):
         return cmap.copy()
     return cmap
-
-
-def _get_data_array(ds, var=None):
-    """Return a DataArray from either a DataArray or Dataset."""
-    if isinstance(ds, xr.DataArray):
-        return ds
-    elif isinstance(ds, xr.Dataset):
-        if var is None:
-            raise ValueError("var must be specified when ds is an xarray Dataset")
-        return ds[var]
-    raise ValueError("ds must be an xarray DataArray or Dataset")
-
-
-def _to_scalar(value):
-    """Convert an xarray scalar (DataArray with 0 dims) to a Python float."""
-    if isinstance(value, (xr.DataArray, xr.Variable)):
-        return float(value.values)
-    return float(value)
 
 
 @lru_cache(maxsize=1)

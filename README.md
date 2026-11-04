@@ -19,15 +19,9 @@ Code and analysis for: "A Collapsed AMOC State Raises the Global Warming Thresho
 ## Project Organization
 
 ```
-├── LICENSE            <- Open-source license if one is chosen
 ├── Makefile           <- Makefile: ```make requirements``` to install packages in a conda evironment
 ├── README.md          <- README
-├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
-│
+├── data               <- Data for plotting
 ├── notebooks          <- Jupyter notebooks for analysis
 │
 ├── pyproject.toml     <- Project configuration file with package metadata for 
@@ -46,8 +40,6 @@ Code and analysis for: "A Collapsed AMOC State Raises the Global Warming Thresho
     ├── __init__.py             <- Makes src a Python module
     │
     ├── config.py               <- Configuration of project settings and folders
-    │
-    ├── dataset.py              <- Scripts to download or generate data
     │
     └── plotting.py             <- Custom convenience function for plotting
 ```
